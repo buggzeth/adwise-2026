@@ -1,26 +1,161 @@
+/* app/globals.css */
+
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand Colors pulled from the logo */
+  --color-brand-purple: #743394;
+  --color-brand-purple-dark: #4A1E60;
+  --color-brand-green: #A4CC3B;
+  --color-brand-teal: #2EB0A6;
+  --color-brand-blue: #4A62A6;
+
+  /* Soft Dark Theme */
+  --color-background: #0A0710;
+  --color-surface: #140E1E;
+  --color-border-soft: #2A1F3D;
+  --color-text-primary: #FFFFFF;
+  --color-text-muted: #B3A5C4;
+
+  /* New Typography System */
+  --font-serif: var(--font-lora), "Georgia", serif;
+  --font-sans: var(--font-jakarta), "system-ui", sans-serif;
+  --font-accent: var(--font-outfit), "system-ui", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Soft ambient background orbs with CSS animation */
+body::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(116, 51, 148, 0.15) 0%, transparent 70%);
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+  animation: float 20s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 40%;
+  right: -10%;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(46, 176, 166, 0.1) 0%, transparent 70%);
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+  animation: float 25s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(5%, 10%) scale(1.1);
+  }
+}
+
+body>* {
+  position: relative;
+  z-index: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: var(--color-text-muted);
+}
+
+::selection {
+  background-color: rgba(164, 204, 59, 0.3);
+  color: #FFFFFF;
+}
+
+/* Custom Gradient Text */
+.text-gradient {
+  background: linear-gradient(to right, var(--color-brand-green), var(--color-brand-teal), var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 
+  PURE CSS SCROLL REVEAL ANIMATIONS 
+  These classes are toggled by the Reveal.tsx component 
+*/
+.reveal-wrapper {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-wrapper.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Continuous gradient flow for the pipeline visualizer */
+.animate-gradient-flow {
+  background-size: 200% 200%;
+  animation: gradientFlow 3s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
